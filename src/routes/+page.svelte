@@ -1,49 +1,62 @@
 <script>
 	import { writable } from "svelte/store";
 
-	let formFields = writable([{ field1: "", field2: "" }]);
+	let formFields = writable([{ corpId: "", name: "" }]);
 
 	const addNewField = () => {
-		formFields.update((fields) => [...fields, { field1: "", field2: "" }]);
+		formFields.update((fields) => [...fields, { corpId: "", name: "" }]);
 	};
 
 	const deleteField = (index) => {
 		formFields.update((fields) => fields.filter((_, i) => i !== index));
 	};
+	const save = () => {
+		console.log(formFields);
+	};
+
+	formFields.subscribe(async (fields: Person[]) => {
+		await localStorage.setItem("corpIdToName", JSON.stringify(fields));
+		await alert(localStorage.getItem("corpIdToName"));
+	});
 </script>
 
-<div class="container mx-auto max-w-xs p-1">
-	<h1 class="text-lg font-bold mb-2 text-center">CorpId -> Name</h1>
-	<form class="space-y-2">
+<div class="container">
+	<h1 class="text-4xl text-center text-primary font-semibold p-5 bg-base-300 shadow-lg rounded-lg">
+		CorpId to Name
+	</h1>
+	<form class="p-3 space-y-1">
 		{#each $formFields as field, i}
 			<div class="flex space-x-2">
 				<input
-					class="form-input flex-1 text-sm px-2 py-1"
+					class="input input-sm flex-1 w-20 input-bordered input-primary text-sm"
 					type="text"
-					placeholder="Corp Id"
-					bind:value={$formFields[i].field1}
+					placeholder="CorpId to replace"
+					bind:value={$formFields[i].corpId}
 				/>
 				<input
-					class="form-input flex-1 text-sm px-2 py-1"
+					class="input input-sm flex-1 input-bordered input-primary text-sm"
 					type="text"
-					placeholder="Name"
-					bind:value={$formFields[i].field2}
+					placeholder="Name to display"
+					bind:value={$formFields[i].name}
 				/>
 				<button
-					class="btn btn-error text-sm px-3"
+					class="btn btn-sm btn-error"
 					type="button"
 					on:click|preventDefault={() => deleteField(i)}
 				>
-					X
+					x
 				</button>
 			</div>
 		{/each}
-		<button
-			class="btn btn-primary text-sm px-2 py-1 mt-2"
-			type="button"
-			on:click|preventDefault={addNewField}
-		>
-			+
-		</button>
+		<div class="py-1">
+			<button class="btn btn-sm bg-success" type="button" on:click|preventDefault={addNewField}>
+				+
+			</button>
+		</div>
+		<div class="py-1 flex align-end">
+			<button class="flex-1 btn btn-sm bg-primary" type="button" on:click|preventDefault={save}
+				>Save</button
+			>
+		</div>
 	</form>
 </div>
