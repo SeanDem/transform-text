@@ -1,0 +1,11 @@
+{
+	"name": "CorpId to Name",
+	"description": "A browser extension that converts CorpId to Name. Made by Sean Demeritt",
+	"version": "1.0.0",
+	"manifest_version": 3,
+	"action": {
+		"default_title": "CorpId -> Name",
+		"default_icon": "favicon.png",
+		"default_popup": "index.html"
+	}
+}
