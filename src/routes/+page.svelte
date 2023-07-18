@@ -1,43 +1,55 @@
-<script>
+<script lang="ts">
 	import { writable } from "svelte/store";
-
-	let formFields = writable([{ corpId: "", name: "" }]);
+	import { saveData, loadData, type Person } from "../utils/utils";
+	import { onDestroy, onMount } from "svelte";
+	let formFields = writable([{ oldWord: "", newWord: "" }]);
+	let unsubscribe = () => {};
 
 	const addNewField = () => {
-		formFields.update((fields) => [...fields, { corpId: "", name: "" }]);
+		formFields.update((fields) => [...fields, { oldWord: "", newWord: "" }]);
 	};
 
-	const deleteField = (index) => {
+	const deleteField = (index: Number) => {
 		formFields.update((fields) => fields.filter((_, i) => i !== index));
 	};
-	const save = () => {
-		console.log(formFields);
+	const setFieldsFromStorage = async () => {
+		const data = await loadData();
+		if (data) {
+			formFields.set(data);
+			if (data.length === 0) addNewField();
+		}
 	};
 
-	formFields.subscribe(async (fields: Person[]) => {
-		await localStorage.setItem("corpIdToName", JSON.stringify(fields));
-		await alert(localStorage.getItem("corpIdToName"));
+	onMount(async () => {
+		await setFieldsFromStorage();
+		unsubscribe = formFields.subscribe(async (fields: Person[]) => {
+			await saveData(fields);
+		});
+	});
+
+	onDestroy(() => {
+		unsubscribe();
 	});
 </script>
 
 <div class="container">
 	<h1 class="text-4xl text-center text-primary font-semibold p-5 bg-base-300 shadow-lg rounded-lg">
-		CorpId to Name
+		Text Replacer
 	</h1>
 	<form class="p-3 space-y-1">
 		{#each $formFields as field, i}
 			<div class="flex space-x-2">
 				<input
-					class="input input-sm flex-1 w-20 input-bordered input-primary text-sm"
+					class="input input-sm flex-1 input-bordered input-primary text-sm"
 					type="text"
-					placeholder="CorpId to replace"
-					bind:value={$formFields[i].corpId}
+					placeholder="text to replace"
+					bind:value={$formFields[i].oldWord}
 				/>
 				<input
 					class="input input-sm flex-1 input-bordered input-primary text-sm"
 					type="text"
-					placeholder="Name to display"
-					bind:value={$formFields[i].name}
+					placeholder="text to display"
+					bind:value={$formFields[i].newWord}
 				/>
 				<button
 					class="btn btn-sm btn-error"
@@ -52,11 +64,6 @@
 			<button class="btn btn-sm bg-success" type="button" on:click|preventDefault={addNewField}>
 				+
 			</button>
-		</div>
-		<div class="py-1 flex align-end">
-			<button class="flex-1 btn btn-sm bg-primary" type="button" on:click|preventDefault={save}
-				>Save</button
-			>
 		</div>
 	</form>
 </div>

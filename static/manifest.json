@@ -1,11 +1,24 @@
 {
-	"name": "CorpId to Name",
-	"description": "A browser extension that converts CorpId to Name. Made by Sean Demeritt",
+	"name": "Text Replacer",
+	"description": "A browser extension that substitutes text on webpages for you. Made by Sean Demeritt",
 	"version": "1.0.0",
 	"manifest_version": 3,
+	"permissions": ["storage", "activeTab", "scripting"],
+	"background": {
+		"service_worker": "service_worker.js"
+	},
+	"icons": {
+		"16": "icons/icon12.png",
+		"48": "icons/icon48.png",
+		"128": "icons/icon128.png"
+	},
 	"action": {
-		"default_title": "CorpId -> Name",
-		"default_icon": "favicon.png",
+		"default_title": "Text Replacer",
+		"default_icon": {
+			"16": "icons/icon12.png",
+			"48": "icons/icon48.png",
+			"128": "icons/icon128.png"
+		},
 		"default_popup": "index.html"
 	}
 }
