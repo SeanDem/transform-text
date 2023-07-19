@@ -34,7 +34,7 @@
 
 <div class="container">
 	<h1 class="text-4xl text-center text-primary font-semibold p-5 bg-base-300 shadow-lg rounded-lg">
-		Text Replacer
+		TransformText
 	</h1>
 	<form class="p-3 space-y-1">
 		{#each $formFields as field, i}
@@ -42,7 +42,7 @@
 				<input
 					class="input input-sm flex-1 input-bordered input-primary text-sm"
 					type="text"
-					placeholder="text to replace"
+					placeholder="text to transform"
 					bind:value={$formFields[i].oldWord}
 				/>
 				<input

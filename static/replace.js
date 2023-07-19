@@ -4,12 +4,14 @@ chrome.storage.local.get(["data"], (replacements) => {
 			if (node.textContent) {
 				let newTextContent = node.textContent;
 				for (let replacement of replacements.data) {
-					newTextContent = newTextContent.replace(
-						new RegExp(replacement.oldWord, "gi"),
-						replacement.newWord,
-					);
+					if (replacement.oldWord) {
+						newTextContent = newTextContent.replace(
+							new RegExp(replacement.oldWord, "gi"),
+							replacement.newWord,
+						);
+					}
+					node.textContent = newTextContent;
 				}
-				node.textContent = newTextContent;
 			}
 		} else {
 			for (let i = 0; i < node.childNodes.length; i++) {
