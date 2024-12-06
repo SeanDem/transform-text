@@ -1,9 +1,12 @@
 {
 	"name": "TransformText",
 	"description": "A browser extension that transforms text on webpages for you. Made by Sean Demeritt",
-	"version": "1.0.0",
+	"version": "1.0.4",
 	"manifest_version": 3,
-	"permissions": ["storage", "activeTab", "scripting"],
+	"host_permissions": [
+		"<all_urls>"
+	  ],
+	"permissions": ["storage", "scripting", "downloads"],
 	"background": {
 		"service_worker": "service_worker.js"
 	},
@@ -13,7 +16,7 @@
 		"128": "icons/icon128.png"
 	},
 	"action": {
-		"default_title": "Transform Tex",
+		"default_title": "TransformText",
 		"default_icon": {
 			"16": "icons/icon12.png",
 			"48": "icons/icon48.png",
