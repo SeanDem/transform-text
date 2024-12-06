@@ -1,18 +1,19 @@
 <script lang="ts">
-	import { writable } from 'svelte/store';
-	import { defaultData, type Word, type Data } from "$lib";
+	import { writable } from "svelte/store";
+	import { type Data, defaultData } from "$lib";
+
 	export let formFields = writable<Data>(defaultData);
 
 	const addNewField = () => {
 		formFields.update(data => {
 			return {
 				...data,
-				words: [...(data.words || []), { oldWord: "", newWord: "" }]
+				words: [...(data.words || []), { oldWord: "", newWord: "" }],
 			};
 		});
 		window.scrollTo({
 			top: document.body.scrollHeight,
-			behavior: 'smooth'
+			behavior: "smooth",
 		});
 	};
 
@@ -20,7 +21,7 @@
 		formFields.update(data => {
 			return {
 				...data,
-				words: data.words.filter((_, i) => i !== index)
+				words: data.words.filter((_, i) => i !== index),
 			};
 		});
 	};

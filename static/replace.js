@@ -1,23 +1,20 @@
-chrome.storage.local.get(["data"], (replacements) => {
+
+chrome.storage.local.get(["data"], ({ data }) => {
 	function replaceText(node) {
-		if (node.nodeType === Node.TEXT_NODE) {
-			if (node.textContent) {
-				let newTextContent = node.textContent;
-				for (let replacement of replacements.data) {
-					if (replacement.oldWord) {
-						newTextContent = newTextContent.replace(
-							new RegExp(replacement.oldWord, "gi"),
-							replacement.newWord,
-						);
-					}
-					node.textContent = newTextContent;
+		if (node.nodeType === Node.TEXT_NODE && node.textContent) {
+			let updatedText = node.textContent;
+			for (const { oldWord, newWord } of data?.words || []) {
+				if (oldWord) {
+					updatedText = updatedText.replace(new RegExp(oldWord, "gi"), newWord);
 				}
 			}
+			node.textContent = updatedText;
 		} else {
-			for (let i = 0; i < node.childNodes.length; i++) {
-				replaceText(node.childNodes[i], replacements);
+			for (const child of node.childNodes) {
+				replaceText(child);
 			}
 		}
 	}
+
 	replaceText(document.body);
 });

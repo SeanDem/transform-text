@@ -1,12 +1,13 @@
 interface Word {
 	oldWord: string;
 	newWord: string;
-	color?: string ; 
 }
+
 interface Data {
 	words: Word[];
 }
-const defaultData: Data =  { words: [{ oldWord: "", newWord: "" }]}
+
+const defaultData: Data = { words: [{ oldWord: "", newWord: "" }] };
 
 const saveData = async (data: Data): Promise<void> => {
 	return new Promise((resolve, reject) => {
@@ -32,6 +33,6 @@ const loadData = (): Promise<Data> => {
 	});
 };
 
-export { saveData, loadData, defaultData };   
+export { saveData, loadData, defaultData };
 export type { Word, Data };
 

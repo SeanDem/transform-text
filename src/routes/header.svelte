@@ -2,25 +2,26 @@
 	import { type Data, defaultData, type Word } from "$lib";
 	import { writable } from "svelte/store";
 	import ThemeDropdown from "./themeDropdown.svelte";
+
 	export let formFields = writable<Data>(defaultData);
 
 	const downloadFormData = () => {
 		const filteredWords = $formFields.words.filter(
-			(item: Word) => item.oldWord.trim() !== '' || item.newWord.trim() !== '');
+			(item: Word) => item.oldWord.trim() !== "" || item.newWord.trim() !== "");
 		const csvRows = [];
-		csvRows.push(['Old Word', 'New Word'].join(','));
+		csvRows.push(["Old Word", "New Word"].join(","));
 		filteredWords.forEach((item: Word) => {
-			csvRows.push([item.oldWord, item.newWord].join(','));
+			csvRows.push([item.oldWord, item.newWord].join(","));
 		});
-		const csvContent = csvRows.join('\n');
-		const csvBlob = new Blob([csvContent], { type: 'text/csv' });
+		const csvContent = csvRows.join("\n");
+		const csvBlob = new Blob([csvContent], { type: "text/csv" });
 		const url = URL.createObjectURL(csvBlob);
 		const currentDate = new Date();
-		const formattedDate = currentDate.toISOString().split('T')[0];
-		const formattedTime = currentDate.toLocaleTimeString().replace(/:/g, '-').replace(/\//g, '-');
+		const formattedDate = currentDate.toISOString().split("T")[0];
+		const formattedTime = currentDate.toLocaleTimeString().replace(/:/g, "-").replace(/\//g, "-");
 		const filename = `text-transform-${formattedDate}-${formattedTime}.csv`;
-		console.log(filename)
-		const a = document.createElement('a');
+		console.log(filename);
+		const a = document.createElement("a");
 		a.href = url;
 		a.download = filename;
 		a.click();
@@ -37,13 +38,13 @@
 		reader.onload = (event) => {
 			try {
 				const csvContent = event.target?.result as string;
-				const rows = csvContent.split('\n');
-				 let words = rows.slice(1).map((row) => {
-					const [oldWord, newWord] = row.split(',');
+				const rows = csvContent.split("\n");
+				let words = rows.slice(1).map((row) => {
+					const [oldWord, newWord] = row.split(",");
 					return { oldWord: oldWord.trim(), newWord: newWord.trim() };
 				});
-					words = words.filter(
-					word => word.oldWord !== "Old Word" && word.newWord !== "New Word"
+				words = words.filter(
+					word => word.oldWord !== "Old Word" && word.newWord !== "New Word",
 				);
 				formFields.update(currFields => {
 					const filteredWords = currFields.words.filter(word => word.oldWord?.trim() !== "");
@@ -52,12 +53,12 @@
 						words: [
 							...filteredWords,
 							...words,
-							{ oldWord: "", newWord: "" }
-						]
+							{ oldWord: "", newWord: "" },
+						],
 					};
 				});
 			} catch (error) {
-				console.error('Error processing CSV data:', error);
+				console.error("Error processing CSV data:", error);
 			}
 		};
 		reader.readAsText(file);
@@ -65,7 +66,7 @@
 	};
 
 	const onUploadClick = () => {
-		document.getElementById('fileInput')?.click();
+		document.getElementById("fileInput")?.click();
 	};
 </script>
 
