@@ -70,7 +70,7 @@
 </script>
 
 <div>
-	<h1 class="text-4xl text-center text-primary font-semibold py-4">
+	<h1 class="text-5xl text-center text-primary font-semibold py-4">
 		TransformText
 	</h1>
 	<div class="flex flex-col mx-2">
