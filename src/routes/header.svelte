@@ -83,12 +83,12 @@
 			on:change={uploadFormData}
 		/>
 		<div class="flex flex-row justify-between">
-			<button class="flex btn btn-sm btn-success items-center w-[16ch]" on:click={onUploadClick}>
+			<button class="flex btn btn-sm btn-success items-center w-[15ch]" on:click={onUploadClick}>
 				<i class="fas fa-upload mr-1"></i>
 				Upload
 			</button>
 			<ThemeDropdown />
-			<button class="flex btn btn-sm btn-success items-center w-[16ch]" on:click={downloadFormData}>
+			<button class="flex btn btn-sm btn-success items-center w-[15ch]" on:click={downloadFormData}>
 				<i class="fas fa-download mr-1"></i>
 				Download
 			</button>

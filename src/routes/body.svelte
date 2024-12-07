@@ -28,22 +28,22 @@
 </script>
 
 {#each $formFields.words as field, i}
-	<div class="flex space-x-2 px-2 pt-1">
+	<div class="flex justify-between px-2 pt-1">
 		<input
-			class="input input-sm input-bordered input-primary text-sm w-64"
+			class="input input-sm input-bordered input-primary text-sm w-44"
 			type="text"
 			placeholder="text to transform"
 			bind:value={field.oldWord}
 		/>
 		<input
-			class="input input-sm input-bordered input-primary text-sm w-64"
+			class="input input-sm input-bordered input-primary text-sm w-44"
 			type="text"
 			placeholder="text to display"
 			bind:value={field.newWord}
 		/>
 		<div>
 			<button
-				class="btn btn-sm btn-error"
+				class="btn btn-sm btn-error ml-1"
 				type="button"
 				on:click|preventDefault={() => deleteField(i)}>
 				x

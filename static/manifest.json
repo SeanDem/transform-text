@@ -4,7 +4,7 @@
 	"version": "1.0.4",
 	"manifest_version": 3,
 	"host_permissions": ["<all_urls>"],
-	"permissions": ["storage", "scripting", "downloads", "activeTab"],
+	"permissions": ["storage", "scripting", "downloads"],
 	"background": {
 		"service_worker": "service_worker.js"
 	},
