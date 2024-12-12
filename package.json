@@ -1,6 +1,6 @@
 {
 	"name": "sean-svelte",
-	"version": "0.0.1",
+	"version": "1.0.6",
 	"private": true,
 	"scripts": {
 		"dev": "vite build --mode development",
