@@ -35,7 +35,7 @@
 		formFields.update(data => {
 			return {
 				...data,
-				words: [...data.words, { oldWord: "", newWord: "" }],
+				words: [{ oldWord: "", newWord: "" }, ...data.words],
 			};
 		});
 	};

@@ -1,10 +1,10 @@
 {
 	"name": "sean-svelte",
-	"version": "1.0.6",
+	"version": "1.0.7",
 	"private": true,
 	"scripts": {
 		"dev": "vite build --mode development",
-		"build": "vite build",
+		"build": "vite build --mode production",
 		"preview": "vite preview",
 		"check": "svelte-kit sync && svelte-check --tsconfig ./tsconfig.json",
 		"check:watch": "svelte-kit sync && svelte-check --tsconfig ./tsconfig.json --watch",
