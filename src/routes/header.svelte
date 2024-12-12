@@ -3,7 +3,7 @@
 	import { writable } from "svelte/store";
 	import ThemeDropdown from "./themeDropdown.svelte";
 
-	export let formFields = writable<Data>(defaultData);
+	export let formFields = writable<Data>(defaultData());
 
 	const downloadFormData = () => {
 		const filteredWords = $formFields.words.filter(
@@ -20,7 +20,6 @@
 		const formattedDate = currentDate.toISOString().split("T")[0];
 		const formattedTime = currentDate.toLocaleTimeString().replace(/:/g, "-").replace(/\//g, "-");
 		const filename = `text-transform-${formattedDate}-${formattedTime}.csv`;
-		console.log(filename);
 		const a = document.createElement("a");
 		a.href = url;
 		a.download = filename;
@@ -68,10 +67,12 @@
 	const onUploadClick = () => {
 		document.getElementById("fileInput")?.click();
 	};
+
 </script>
 
 <div>
-	<h1 class="text-5xl text-center text-primary font-semibold py-4">
+	<h1
+		class="text-5xl text-center text-primary font-semibold pb-4">
 		TransformText
 	</h1>
 	<div class="flex flex-col mx-2">
@@ -83,14 +84,14 @@
 			on:change={uploadFormData}
 		/>
 		<div class="flex flex-row justify-between">
-			<button class="flex btn btn-sm btn-success items-center w-[15ch]" on:click={onUploadClick}>
+			<button class="flex btn btn-sm btn-secondary items-center w-[13ch]" on:click={onUploadClick}>
 				<i class="fas fa-upload mr-1"></i>
-				Upload
+				Import
 			</button>
 			<ThemeDropdown />
-			<button class="flex btn btn-sm btn-success items-center w-[15ch]" on:click={downloadFormData}>
+			<button class="flex btn btn-sm btn-secondary items-center w-[13ch]" on:click={downloadFormData}>
 				<i class="fas fa-download mr-1"></i>
-				Download
+				Export
 			</button>
 		</div>
 	</div>

@@ -10,7 +10,9 @@
 		const theme = localStorage.getItem("theme");
 		if (theme) {
 			themeStore.set(theme as Theme);
-		} else themeStore.set(Theme.Cupcake);
+		} else {
+			themeStore.set(Theme.Cupcake);
+		}
 
 		themeStore.subscribe((value) => {
 			localStorage.setItem("theme", value);

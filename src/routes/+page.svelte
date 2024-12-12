@@ -7,7 +7,7 @@
 	import { themeStore } from "$lib/themeStore";
 
 	let data: Data;
-	let formFields = writable<Data>(defaultData);
+	let formFields = writable<Data>(defaultData());
 	let unsubscribe = () => {
 	};
 
@@ -38,14 +38,10 @@
 				words: [...data.words, { oldWord: "", newWord: "" }],
 			};
 		});
-		window.scrollTo({
-			top: document.body.scrollHeight,
-			behavior: "smooth",
-		});
 	};
 </script>
 
-<div data-theme={$themeStore} class="container">
+<div data-theme={$themeStore} class="container py-4 px-1">
 	<Header {formFields} />
 	<Body {formFields} />
 </div>

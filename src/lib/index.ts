@@ -7,7 +7,9 @@ interface Data {
 	words: Word[];
 }
 
-const defaultData: Data = { words: [{ oldWord: "", newWord: "" }] };
+const defaultData: () => Data = () => ({
+	words: [{ oldWord: "", newWord: "" }]
+});
 
 const saveData = async (data: Data): Promise<void> => {
 	return new Promise((resolve, reject) => {
