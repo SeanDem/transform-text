@@ -28,7 +28,7 @@
 	};
 </script>
 
-<div class="flex justify-between p-2">
+<div class="flex justify-between px-2 pb-1">
 	<div class="flex">
 		<button
 			class="btn btn-sm btn-success"
