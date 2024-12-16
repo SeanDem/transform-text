@@ -1,3 +1,5 @@
+import type { Writable } from "svelte/store";
+
 interface Word {
 	oldWord: string;
 	newWord: string;
@@ -10,6 +12,8 @@ interface Data {
 const defaultData: () => Data = () => ({
 	words: [{ oldWord: "", newWord: "" }]
 });
+
+const defaultWord: () => Word = () => ({ oldWord: "", newWord: "" });
 
 const saveData = async (data: Data): Promise<void> => {
 	return new Promise((resolve, reject) => {
@@ -35,6 +39,28 @@ const loadData = (): Promise<Data> => {
 	});
 };
 
-export { saveData, loadData, defaultData };
+const removeDuplicatesFromList = (data: Data) => {
+	const uniqueWords = new Set<string>();
+	return data.words.filter(({ oldWord, newWord }) => {
+		if (oldWord && newWord) {
+			if (!uniqueWords.has(oldWord)) {
+				uniqueWords.add(oldWord);
+				return true;
+			}
+			return false;
+		}
+		return true;
+	});
+};
+
+const removeDuplicates = (formFields: Writable<Data>): void => {
+	formFields.update(data => {
+		data.words = removeDuplicatesFromList(data);
+		return data;
+	});
+};
+
+
+export { saveData, loadData, defaultData, removeDuplicates, removeDuplicatesFromList, defaultWord};
 export type { Word, Data };
 

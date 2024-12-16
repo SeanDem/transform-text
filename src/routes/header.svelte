@@ -1,5 +1,5 @@
 <script lang="ts">
-	import { type Data, defaultData, type Word } from "$lib";
+	import { type Data, defaultData, defaultWord, type Word } from "$lib";
 	import { writable } from "svelte/store";
 	import ThemeDropdown from "./themeDropdown.svelte";
 
@@ -35,30 +35,26 @@
 
 		const reader = new FileReader();
 		reader.onload = (event) => {
-			try {
-				const csvContent = event.target?.result as string;
-				const rows = csvContent.split("\n");
-				let words = rows.slice(1).map((row) => {
-					const [oldWord, newWord] = row.split(",");
-					return { oldWord: oldWord.trim(), newWord: newWord.trim() };
-				});
-				words = words.filter(
-					word => word.oldWord !== "Old Word" && word.newWord !== "New Word",
-				);
-				formFields.update(currFields => {
-					const filteredWords = currFields.words.filter(word => word.oldWord?.trim() !== "");
-					return {
-						...currFields,
-						words: [
-							...filteredWords,
-							...words,
-							{ oldWord: "", newWord: "" },
-						],
-					};
-				});
-			} catch (error) {
-				console.error("Error processing CSV data:", error);
-			}
+			const csvContent = event.target?.result as string;
+			const rows = csvContent.split("\n");
+			let words = rows.slice(1).map((row) => {
+				const [oldWord, newWord] = row.split(",");
+				return { oldWord: oldWord.trim(), newWord: newWord.trim() };
+			});
+			words = words.filter(
+				word => word.oldWord !== "Old Word" && word.newWord !== "New Word",
+			);
+			formFields.update(currFields => {
+				const currWords = currFields.words.filter(word => word.oldWord?.trim() !== "");
+				return {
+					...currFields,
+					words: [
+						defaultWord(),
+						...currWords,
+						...words,
+					],
+				};
+			});
 		};
 		reader.readAsText(file);
 		fileInput.value = "";

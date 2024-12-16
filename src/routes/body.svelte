@@ -1,6 +1,6 @@
 <script lang="ts">
 	import { writable } from "svelte/store";
-	import { type Data, defaultData } from "$lib";
+	import { type Data, defaultData, defaultWord } from "$lib";
 
 	export let formFields = writable<Data>(defaultData());
 
@@ -8,7 +8,7 @@
 		formFields.update(data => {
 			return {
 				...data,
-				words: [{ oldWord: "", newWord: "" }, ...(data.words || [])],
+				words: [defaultWord(), ...(data.words || [])],
 			};
 		});
 	};
@@ -23,9 +23,9 @@
 	};
 
 	const clearAllFields = () => {
-			formFields.set({ words: []});
 			formFields.set(defaultData())
 	};
+
 </script>
 
 <div class="flex justify-between px-2 pb-1">
