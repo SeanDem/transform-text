@@ -33,30 +33,35 @@
 		const file = fileInput.files?.[0];
 		if (!file) return;
 
-		const reader = new FileReader();
-		reader.onload = (event) => {
-			const csvContent = event.target?.result as string;
-			const rows = csvContent.split("\n");
-			let words = rows.slice(1).map((row) => {
-				const [oldWord, newWord] = row.split(",");
-				return { oldWord: oldWord.trim(), newWord: newWord.trim() };
-			});
-			words = words.filter(
-				word => word.oldWord !== "Old Word" && word.newWord !== "New Word",
-			);
-			formFields.update(currFields => {
-				const currWords = currFields.words.filter(word => word.oldWord?.trim() !== "");
-				return {
-					...currFields,
-					words: [
-						defaultWord(),
-						...currWords,
-						...words,
-					],
-				};
-			});
-		};
-		reader.readAsText(file);
+		try {
+			const reader = new FileReader();
+			reader.onload = (event) => {
+				const csvContent = event.target?.result as string;
+				const rows = csvContent.split("\n");
+				let words = rows.slice(1).map((row) => {
+					const [oldWord, newWord] = row.split(",");
+					return { oldWord: oldWord.trim(), newWord: newWord.trim() };
+				});
+				words = words.filter(
+					word => word.oldWord !== "Old Word" && word.newWord !== "New Word",
+				);
+				formFields.update(currFields => {
+					const currWords = currFields.words.filter(word => word.oldWord?.trim() !== "");
+					return {
+						...currFields,
+						words: [
+							defaultWord(),
+							...currWords,
+							...words,
+						],
+					};
+				});
+			};
+			reader.readAsText(file);
+		}
+		catch (error) {
+			console.error(error);
+		}
 		fileInput.value = "";
 	};
 

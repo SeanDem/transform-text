@@ -1,7 +1,7 @@
 {
 	"name": "TransformText",
 	"description": "A browser extension that transforms text on webpages, by Sean Demeritt",
-	"version": "1.0.7",
+	"version": "1.0.9",
 	"manifest_version": 3,
 	"host_permissions": ["<all_urls>"],
 	"permissions": ["storage", "scripting"],

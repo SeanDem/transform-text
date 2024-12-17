@@ -33,7 +33,7 @@ const loadData = (): Promise<Data> => {
 			if (chrome.runtime.lastError) {
 				reject(`Error loading data: ${chrome.runtime.lastError.message}`);
 			} else {
-				resolve(result.data);
+				resolve(result.data || defaultData());
 			}
 		});
 	});

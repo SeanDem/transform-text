@@ -20,7 +20,6 @@
 	onMount(async () => {
 		await loadFormFields();
 		unsubscribe = formFields.subscribe(data => {
-			console.log("tick")
 			const deduplicatedWords = removeDuplicatesFromList(data);
 			if (deduplicatedWords.length !== data.words.length) {
 				formFields.set({
